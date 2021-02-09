@@ -173,7 +173,7 @@ function getCookie(cname) { //Get Specific Cookie
   var name = cname + "="; //i.e getCookie('username') name = 'username='
   var decodedCookie = decodeURIComponent(document.cookie); //Unencode cookie
   var ca = decodedCookie.split(';'); //Split string into array at ';'
-  for(var i = 0; i <ca.length; i++) { // for each cookie vaiable in document.cookie do
+  for (var i = 0; i < ca.length; i++) { // for each cookie vaiable in document.cookie do
     var c = ca[i];
     while (c.charAt(0) == ' ') {
       c = c.substring(1);
@@ -202,17 +202,22 @@ function closingCode() {
 }
 //Loading Tasks Back
 var incompleteTasks = getCookie('incomplete');
-var incompleteTasksToMake = incompleteTasks.split(',');
 var completedTasks = getCookie('completed');
-var completedTasksToMake = completedTasks.split(',');
-incompleteTasksToMake.forEach((item, index) => {
-  let newItem = createNewTaskElement(item)
-  incompleteTaskHolder.appendChild(newItem);
-  bindTaskEvents(newItem, taskCompleted);
-});
-completedTasksToMake.forEach((item, index) => {
-  let newItem = createNewTaskElement(item)
-  newItem.children[0].checked = true;
-  completedTasksHolder.appendChild(newItem);
-  bindTaskEvents(newItem, taskIncomplete);
-});
+if (completedTasks != "") {
+  var completedTasksToMake = completedTasks.split(',');
+  completedTasksToMake.forEach((item, index) => {
+    let newItem = createNewTaskElement(item)
+    newItem.children[0].checked = true;
+    completedTasksHolder.appendChild(newItem);
+    bindTaskEvents(newItem, taskIncomplete);
+  });
+
+}
+if (incompleteTasks != "") {
+  var incompleteTasksToMake = incompleteTasks.split(',');
+  incompleteTasksToMake.forEach((item, index) => {
+    let newItem = createNewTaskElement(item)
+    incompleteTaskHolder.appendChild(newItem);
+    bindTaskEvents(newItem, taskCompleted);
+  });
+}
